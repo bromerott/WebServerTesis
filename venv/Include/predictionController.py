@@ -4,7 +4,6 @@ import pickle
 from regressorWrapper import RegressorWrapper
 from CommitteeRegressor import CommitteeRegressor
 import tensorflow as tf
-tb._SYMBOLIC_SCOPE.value = True
 class predictionController:
 
     dfPredictions = pd.DataFrame()
