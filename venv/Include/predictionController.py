@@ -3,7 +3,7 @@ import numpy as np
 import pickle
 from regressorWrapper import RegressorWrapper
 from CommitteeRegressor import CommitteeRegressor
-import keras.backend.tensorflow_backend as tb
+import tensorflow as tf
 tb._SYMBOLIC_SCOPE.value = True
 class predictionController:
 
@@ -65,8 +65,10 @@ class predictionController:
         self.comite.addMember(RegressorWrapper('LSTM','GOOGL',dictLSTM['LSTM'+'-'+'GOOGL']))
         self.comite.addMember(RegressorWrapper('LSTM','WMT',dictLSTM['LSTM'+'-'+'WMT']))
         self.comite.addMember(RegressorWrapper('LSTM','IBM',dictLSTM['LSTM'+'-'+'IBM']))
-
+        global graph
+        graph = tf.get_default_graph()
     def dailyPrediction(self,ticker,history):
-        lastValue = history[history.size-1]
-        prediction = self.comite.predict(ticker,history)
-        return (ticker,prediction,prediction-lastValue)
+        with graph.as_default():
+            lastValue = history[history.size-1]
+            prediction = self.comite.predict(ticker,history)
+            return (ticker,prediction,prediction-lastValue)
