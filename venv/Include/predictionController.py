@@ -67,7 +67,6 @@ class predictionController:
         global graph
         graph = tf.get_default_graph()
     def dailyPrediction(self,ticker,history):
-        with graph.as_default():
-            lastValue = history[history.size-1]
-            prediction = self.comite.predict(ticker,history)
-            return (ticker,prediction,prediction-lastValue)
+        lastValue = history[history.size-1]
+        prediction = self.comite.predict(ticker,history)
+        return (ticker,prediction,prediction-lastValue)
