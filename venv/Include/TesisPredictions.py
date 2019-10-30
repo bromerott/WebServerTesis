@@ -6,34 +6,23 @@ import predictionController
 import time
 import atexit
 import pandas as pd
-import authenticationController
+import numpy as np
 
 app = Flask(__name__)
 
 contPredictions = predictionController.predictionController()
-contAuthentication = authenticationController.authenticationController()
-#GET Request to return today's predictions
-@app.route('/TesisPredictions/getPredictions', methods=['GET'])
-def get_Asignaciones():
-    contPredictions.dailyPrediction()
-    return jsonify({'Predictions':contPredictions.getPredictions()})
-
-#POST Request to return today's predictions
-@app.route('/TesisPredictions/authenticate', methods=['POST'])
-def authenticate():
+@app.route('/stockPrediction/getNextFromHistory', methods=['POST'])
+def get_Predictinos_History():
     reqData = request.get_json()
-    email = reqData['email']
-    password = reqData['password']
-    return jsonify(contAuthentication.authenticate(email,password))
-
-#POST Request to register new User
-@app.route('/TesisPredictions/registerUser', methods=['POST'])
-def register():
-    reqData = request.get_json()
-    email = reqData['email']
-    password = reqData['password']
-    contAuthentication.registerUser(email,password)
-    return jsonify({'User': 'Registered'})
+    ticker = reqData['ticker']
+    key = reqData['api-key']
+    listaHist = reqData['historico']
+    print(type(listaHist))
+    if (key=="Master"):
+        tick,pred,change = contPredictions.dailyPrediction(ticker,np.array(listaHist))
+        return jsonify(ticker=tick,prediction=pred,increase=change)
+    else:
+        return jsonify(message="Api-key incorrecta")
 
 #Error Mapping
 @app.errorhandler(404)
@@ -41,4 +30,4 @@ def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == '__main__':
-    app.run(debug=True,host="0.0.0.0")
+    app.run(debug=True,host="0.0.0.0",threaded=False)
