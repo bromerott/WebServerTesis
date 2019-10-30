@@ -1,5 +1,3 @@
-import keras.backend.tensorflow_backend as tb
-tb._SYMBOLIC_SCOPE.value = True
 class CommitteeRegressor():
   def __init__(self):
     self.committeeSize=0

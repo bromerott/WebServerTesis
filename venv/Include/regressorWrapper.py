@@ -1,10 +1,8 @@
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
-import keras
+import tensorflow.keras
 import xgboost
-import keras.backend.tensorflow_backend as tb
-tb._SYMBOLIC_SCOPE.value = True
 class RegressorWrapper():
   def __init__(self,tipo,ticker,regressor):
     self.tipo = tipo
