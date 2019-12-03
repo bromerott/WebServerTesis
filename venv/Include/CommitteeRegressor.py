@@ -9,7 +9,6 @@ class CommitteeRegressor():
     self.listaMiembros.append((regressor.ticker,regressor))
     self.committeeSize=self.committeeSize+1
   def predict(self,ticker,history):
-    with predictionController.graph.as_default():
       if (self.voting=="Simple"):
         i=0
         sumaTotal=0

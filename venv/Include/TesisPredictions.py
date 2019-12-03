@@ -18,7 +18,7 @@ def get_Predictinos_History():
     key = reqData['api-key']
     listaHist = reqData['historico']
     print(type(listaHist))
-    if (key=="Master"):
+    if (key=="MASTER"):
         tick,pred,change = contPredictions.dailyPrediction(ticker,np.array(listaHist))
         return jsonify(ticker=tick,prediction=pred,increase=change)
     else:
@@ -30,4 +30,4 @@ def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == '__main__':
-    app.run(debug=True,host="0.0.0.0",threaded=False)
+    app.run(debug=True,host="0.0.0.0",threaded=False,use_reloader=False)

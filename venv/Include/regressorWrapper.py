@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
-import tensorflow.keras
+from keras import Sequential
 import xgboost
 import predictionController
 class RegressorWrapper():
@@ -10,7 +10,6 @@ class RegressorWrapper():
     self.ticker=ticker
     self.regressor = regressor
   def predict(self, history):
-    with predictionController.graph.as_default():
       if self.tipo=='LSTM':
         #scale in respect to history
         sc = MinMaxScaler(feature_range = (0, 1))

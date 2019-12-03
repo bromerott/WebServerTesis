@@ -3,7 +3,6 @@ import numpy as np
 import pickle
 from regressorWrapper import RegressorWrapper
 from CommitteeRegressor import CommitteeRegressor
-import tensorflow as tf
 class predictionController:
 
     dfPredictions = pd.DataFrame()
@@ -64,8 +63,6 @@ class predictionController:
         self.comite.addMember(RegressorWrapper('LSTM','GOOGL',dictLSTM['LSTM'+'-'+'GOOGL']))
         self.comite.addMember(RegressorWrapper('LSTM','WMT',dictLSTM['LSTM'+'-'+'WMT']))
         self.comite.addMember(RegressorWrapper('LSTM','IBM',dictLSTM['LSTM'+'-'+'IBM']))
-        global graph
-        graph = tf.get_default_graph()
     def dailyPrediction(self,ticker,history):
         lastValue = history[history.size-1]
         prediction = self.comite.predict(ticker,history)
